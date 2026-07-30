@@ -9,5 +9,8 @@ wheels/
 # Virtual environments
 .venv
 llm_sdk/
+
+# Misc
 tests
 data/output
+*.swp
