@@ -9,5 +9,5 @@ wheels/
 # Virtual environments
 .venv
 llm_sdk/
-src/tests
+tests
 data/output
