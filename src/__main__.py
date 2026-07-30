@@ -1,24 +1,30 @@
-import json
 import argparse
-#from src.utils import load_inputs
 from src.engine import FunctionCallingEngine
+from src.json_parser import JsonParser
 
-def main():
-    parser = argparse.ArgumentParser(description="Call Me Maybe: LLM Function Caller")
-    parser.add_argument("--functions_definition", default="data/input/functions_definition.json")
-    parser.add_argument("--input", default="data/input/function_calling_tests.json")
-    parser.add_argument("--output", default="data/output/function_calling_results.json")
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="LLM Function Caller")
+    parser.add_argument(
+        "--functions_definition",
+        default="data/input/functions_definition.json"
+    )
+    parser.add_argument(
+        "--input",
+        default="data/input/function_calling_tests.json"
+    )
+    parser.add_argument(
+        "--output",
+        default="data/output/function_calling_results.json"
+    )
+
     args = parser.parse_args()
+    json_parser = JsonParser(args.functions_definition, args.input)
+    engine = FunctionCallingEngine(json_parser.functions)
 
-    with open(args.functions_definition, "r") as f:
-        funcs = json.loads(f.read())
-    with open(args.input, "r") as f:
-        tests = json.loads(f.read())
-    engine = FunctionCallingEngine(funcs)
+    for test in json_parser.tests:
+        engine.generate(test["prompt"])
 
-    for test in tests:
-        print(test["prompt"])
-        #engine.generate(test)
 
 if __name__ == "__main__":
     main()
