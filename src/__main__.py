@@ -1,11 +1,13 @@
 import argparse
+from dotenv import load_dotenv
 from pydantic import ValidationError
-from src.engine import FunctionCallingEngine
 from src.json_parser import JsonParser
+from src.engine import FunctionCallingEngine
 
 
 def main() -> None:
     """Parse the args and execute the function calling tests."""
+    load_dotenv()
     parser = argparse.ArgumentParser(description="LLM Function Caller")
     parser.add_argument(
         "--functions_definition",
@@ -23,14 +25,15 @@ def main() -> None:
     args = parser.parse_args()
     try:
         json_parser = JsonParser.load_files(
-            args.functions_definition, args.input
+            args.functions_definition, args.input, args.output
         )
     except (ValidationError, RuntimeError) as e:
         exit(str(e))
     engine = FunctionCallingEngine(functions=json_parser.functions)
 
     for test in json_parser.prompts:
-        engine.generate(test.prompt)
+        output = engine.generate(test.prompt)
+        # json_parser.write_to_output_file(output)
 
 
 if __name__ == "__main__":
