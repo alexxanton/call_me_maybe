@@ -14,16 +14,20 @@ class JsonParser(BaseModel):
 
     functions: List[Function]
     prompts: List[Prompt]
+    output_file: str
 
     @classmethod
-    def load_files(cls, funcs_file: str, prompts_file: str) -> JsonParser:
+    def load_files(
+        cls, funcs_file: str, prompts_file: str, output_file: str
+    ) -> JsonParser:
         """Loads function and prompt definitions from JSON files."""
         functions = cls._load_file(funcs_file, Function)
         prompts = cls._load_file(prompts_file, Prompt)
 
         return cls(
             functions=functions,
-            prompts=prompts
+            prompts=prompts,
+            output_file=output_file
         )
 
     @staticmethod
@@ -35,3 +39,11 @@ class JsonParser(BaseModel):
             return [model.model_validate(item) for item in data]
         except (OSError, JSONDecodeError) as e:
             raise RuntimeError(f"Failed to load {file}: {e}") from e
+
+    def write_to_output_file(self, output: str) -> None:
+        """Write the generated output from the LLM to the output file."""
+        try:
+            with open(self.output_file, "w") as file:
+                file.write(output)
+        except OSError as e:
+            print(e)
