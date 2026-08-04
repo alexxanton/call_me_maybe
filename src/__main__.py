@@ -24,7 +24,7 @@ def main() -> None:
 
     args = parser.parse_args()
     try:
-        json_parser = JsonParser.load_files(
+        json_parser = JsonParser(
             args.functions_definition, args.input, args.output
         )
     except (ValidationError, RuntimeError) as e:

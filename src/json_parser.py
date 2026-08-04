@@ -16,22 +16,17 @@ class JsonParser(BaseModel):
     prompts: List[Prompt]
     output_file: str
 
-    @classmethod
-    def load_files(
-        cls, funcs_file: str, prompts_file: str, output_file: str
-    ) -> JsonParser:
+    def __init__(
+        self, funcs_file: str, prompts_file: str, output_file: str
+    ) -> None:
         """Loads function and prompt definitions from JSON files."""
-        functions = cls._load_file(funcs_file, Function)
-        prompts = cls._load_file(prompts_file, Prompt)
-
-        return cls(
-            functions=functions,
-            prompts=prompts,
-            output_file=output_file
+        functions = self._load_file(funcs_file, Function)
+        prompts = self._load_file(prompts_file, Prompt)
+        super().__init__(
+            functions=functions, prompts=prompts, output_file=output_file
         )
 
-    @staticmethod
-    def _load_file(file: str, model: type[T]) -> List[T]:
+    def _load_file(self, file: str, model: type[T]) -> List[T]:
         """Reads a JSON file and validates it."""
         try:
             with open(file, "r") as f:
