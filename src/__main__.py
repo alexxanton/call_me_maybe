@@ -29,7 +29,7 @@ def main() -> None:
         )
     except (ValidationError, RuntimeError) as e:
         exit(str(e))
-    engine = FunctionCallingEngine(functions=json_parser.functions)
+    engine = FunctionCallingEngine(json_parser.functions)
 
     for test in json_parser.prompts:
         output = engine.generate(test.prompt)
