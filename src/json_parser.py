@@ -1,8 +1,9 @@
 from __future__ import annotations
 import json
-from json.decoder import JSONDecodeError
-from typing import List, TypeVar
+from pathlib import Path
 from pydantic import BaseModel
+from json.decoder import JSONDecodeError
+from typing import List, Optional, TypeVar
 from .validation import Function, Prompt
 
 
@@ -25,6 +26,7 @@ class JsonParser(BaseModel):
         super().__init__(
             functions=functions, prompts=prompts, output_file=output_file
         )
+        self._path: Optional[Path] = None
 
     def _load_file(self, file: str, model: type[T]) -> List[T]:
         """Reads a JSON file and validates it."""
@@ -37,8 +39,8 @@ class JsonParser(BaseModel):
 
     def write_to_output_file(self, output: str) -> None:
         """Write the generated output from the LLM to the output file."""
-        try:
-            with open(self.output_file, "w") as file:
-                file.write(output)
-        except OSError as e:
-            print(e)
+        if self._path is None:
+            self._path = Path(self.output_file)
+            self._path.parent.mkdir(parents=True, exist_ok=True)
+        self._path.write_text(output)
+        print(output)

@@ -32,8 +32,13 @@ def main() -> None:
     engine = FunctionCallingEngine(json_parser.functions)
 
     for test in json_parser.prompts:
+        print(test)
         output = engine.generate(test.prompt)
-        # json_parser.write_to_output_file(output)
+        print()
+        try:
+            json_parser.write_to_output_file(output)
+        except OSError as e:
+            print(e)
 
 
 if __name__ == "__main__":
