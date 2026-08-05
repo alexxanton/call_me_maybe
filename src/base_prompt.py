@@ -11,7 +11,7 @@ class BasePrompt(BaseModel):
     _raw_base_prompt = """
         All generated output must be in valid JSON format.
         Take one function from the list and pick
-        the most appropiate for the request.
+        the most appropriate for the request.
         The parameters must be the same type as
         in the definition and must make sense,
         for example, a string can't be on a number parameter.
