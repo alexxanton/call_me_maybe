@@ -1,0 +1,95 @@
+[
+	{
+		"prompt": "What is the average of 12, 18, and 24?"
+	},
+	{
+		"prompt": "Reverse the string 'strawberry'"
+	},
+	{
+		"prompt": "Convert the temperature 25 Celsius to Fahrenheit"
+	},
+	{
+		"prompt": "Is the number 17 even?"
+	},
+	{
+		"prompt": "Count how many words are in 'The quick brown fox jumps'"
+	},
+	{
+		"prompt": "Greet Alice"
+	},
+	{
+		"prompt": "What is 15 multiplied by 8?"
+	},
+	{
+		"prompt": "Replace every occurrence of 'cat' with 'dog' in 'The cat chased another cat'"
+	},
+	{
+		"prompt": "Is 'racecar' a palindrome?"
+	},
+	{
+		"prompt": "Find the largest number among 14, 82, 37, and 51"
+	},
+	{
+		"prompt": "Convert the string 'hello world' to uppercase"
+	},
+	{
+		"prompt": "Calculate the square root of 81"
+	},
+	{
+		"prompt": "Extract all numbers from 'I have 12 apples and 7 oranges'"
+	},
+	{
+		"prompt": "How many characters are in 'programming'?"
+	},
+	{
+		"prompt": "Add pepe and john together"
+	},
+	{
+		"prompt": "Format the name 'john doe' as 'John Doe'"
+	},
+	{
+		"prompt": "What is the absolute value of -42?"
+	},
+	{
+		"prompt": "Check whether the string 'hello123' contains any digits"
+	},
+	{
+		"prompt": "When were dinosaurs discovered?"
+	},
+	{
+		"prompt": "Calculate 3.5 divided by 0.5"
+	},
+	{
+		"prompt": "Convert 100 Fahrenheit to Celsius"
+	},
+	{
+		"prompt": "Remove all vowels from 'beautiful'"
+	},
+	{
+		"prompt": "Is 49 a prime number?"
+	},
+	{
+		"prompt": "What is the length of the string 'Hello, world!'?"
+	},
+	{
+		"prompt": "Tell me who won the World Cup in 2018"
+	},
+	{
+		"prompt": "Sort the numbers 9, 2, 7, 1, and 5 in ascending order"
+	},
+	{
+		"prompt": "Convert 'hello world' to lowercase"
+	},
+	{
+		"prompt": "Calculate the percentage that 25 is of 200"
+	},
+	{
+		"prompt": "Does 'OpenAI' start with the letter O?"
+	},
+	{
+		"prompt": "Replace all numbers in 'I bought 3 apples and 12 oranges' with 'NUMBER'"
+	},
+	{
+		"prompt": "What is the factorial of 6?"
+	}
+]

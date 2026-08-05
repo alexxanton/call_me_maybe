@@ -1,0 +1,335 @@
+[
+	{
+		"name": "fn_add_numbers",
+		"description": "Add two numbers together and return their sum.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			},
+			"b": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_multiply_numbers",
+		"description": "Multiply two numbers together and return their product.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			},
+			"b": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_divide_numbers",
+		"description": "Divide one number by another and return the result.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			},
+			"b": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_calculate_average",
+		"description": "Calculate the average of a collection of numbers.",
+		"parameters": {
+			"numbers": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_get_square_root",
+		"description": "Calculate the square root of a number.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_absolute_value",
+		"description": "Calculate the absolute value of a number.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_is_even",
+		"description": "Determine whether a number is even.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_is_prime",
+		"description": "Determine whether a number is prime.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_find_largest",
+		"description": "Find the largest number in a collection of numbers.",
+		"parameters": {
+			"numbers": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_reverse_string",
+		"description": "Reverse a string and return the reversed result.",
+		"parameters": {
+			"s": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_to_uppercase",
+		"description": "Convert a string to uppercase.",
+		"parameters": {
+			"s": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_to_lowercase",
+		"description": "Convert a string to lowercase.",
+		"parameters": {
+			"s": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_count_words",
+		"description": "Count the number of words in a string.",
+		"parameters": {
+			"s": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_count_characters",
+		"description": "Count the number of characters in a string.",
+		"parameters": {
+			"s": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_is_palindrome",
+		"description": "Determine whether a string reads the same forwards and backwards.",
+		"parameters": {
+			"s": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_contains_digits",
+		"description": "Determine whether a string contains one or more numeric digits.",
+		"parameters": {
+			"s": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_starts_with",
+		"description": "Determine whether a string starts with a specified prefix.",
+		"parameters": {
+			"s": {
+				"type": "string"
+			},
+			"prefix": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_replace_string",
+		"description": "Replace every occurrence of one substring with another substring.",
+		"parameters": {
+			"source_string": {
+				"type": "string"
+			},
+			"search": {
+				"type": "string"
+			},
+			"replacement": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_remove_vowels",
+		"description": "Remove all vowels from a string.",
+		"parameters": {
+			"s": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_extract_numbers",
+		"description": "Extract all numeric values from a string.",
+		"parameters": {
+			"s": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_format_name",
+		"description": "Format a person's name using title case.",
+		"parameters": {
+			"name": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_greet",
+		"description": "Generate a greeting message for a person by name.",
+		"parameters": {
+			"name": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_calculate_percentage",
+		"description": "Calculate what percentage one number represents of another number.",
+		"parameters": {
+			"part": {
+				"type": "number"
+			},
+			"whole": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_calculate_factorial",
+		"description": "Calculate the factorial of a non-negative integer.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_celsius_to_fahrenheit",
+		"description": "Convert a temperature from Celsius to Fahrenheit.",
+		"parameters": {
+			"celsius": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_fahrenheit_to_celsius",
+		"description": "Convert a temperature from Fahrenheit to Celsius.",
+		"parameters": {
+			"fahrenheit": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	}
+]
