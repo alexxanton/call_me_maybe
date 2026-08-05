@@ -1,0 +1,17 @@
+[
+	{
+		"prompt": "Create an event titled 'Lunch'. Description 'Lunch with Maria'. Date 2026-08-14. Start time 13:00. End time 14:30. Location 'La Rambla'. Organizer 'Alex'. Attendees 'Alex, Maria'. Category 'personal'. Priority 1. Reminder 20 minutes. Recurrence none. Timezone Europe/Madrid."
+	},
+	{
+		"prompt": "Schedule 'Morning Standup' for 2026-08-12 from 08:30 to 09:00. It is a daily engineering meeting in 'Conference Room 2'. Alice organizes it and the attendees are Bob, Charlie, and David. Category is work, priority is 2, reminder is 10 minutes, recurrence is daily, timezone is Europe/Madrid, and the description is 'Daily engineering standup'."
+	},
+	{
+		"prompt": "Create a calendar event titled 'Project Deadline'. The description should be 'Final submission of the project'. It takes place on 2026-12-15 from 00:00 to 23:59. The location is 'Online'. The organizer is 'Project Team'. The attendees are 'Alice, Bob, Charlie'. Category is 'deadline', priority 5, reminder 1440 minutes, recurrence none, timezone UTC."
+	},
+	{
+		"prompt": "Create an event named 'Gym Session', described as 'Leg day workout', on 2026-08-20 from 18:00 until 19:30 at 'Fitness Center'. The organizer is 'Alex', attendees are 'Alex', category is 'fitness', priority 2, reminder is 30 minutes, recurrence is weekly, and the timezone is 'Europe/Madrid'."
+	},
+	{
+		"prompt": "Schedule a 'Conference Call' with the description 'Discuss the Q4 budget'. The date is 2026-09-21, from 16:00 to 17:00, location 'Zoom', organizer 'Finance Department', attendees 'Alice, Bob, Carol, Dave', category 'business', priority 4, reminder 30 minutes, recurrence 'monthly', timezone 'Europe/Paris'."
+	}
+]

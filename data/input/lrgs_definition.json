@@ -1,0 +1,50 @@
+[
+	{
+		"name": "fn_create_event",
+		"description": "Create a calendar event with a title, description, date, start time, end time, location, organizer, attendee list, category, priority, reminder setting, recurrence rule, and timezone.",
+		"parameters": {
+			"title": {
+				"type": "string"
+			},
+			"description": {
+				"type": "string"
+			},
+			"date": {
+				"type": "string"
+			},
+			"start_time": {
+				"type": "string"
+			},
+			"end_time": {
+				"type": "string"
+			},
+			"location": {
+				"type": "string"
+			},
+			"organizer": {
+				"type": "string"
+			},
+			"attendees": {
+				"type": "string"
+			},
+			"category": {
+				"type": "string"
+			},
+			"priority": {
+				"type": "number"
+			},
+			"reminder_minutes": {
+				"type": "number"
+			},
+			"recurrence": {
+				"type": "string"
+			},
+			"timezone": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	}
+]
