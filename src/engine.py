@@ -1,4 +1,5 @@
 import json
+import numpy as np
 from typing import List, Dict
 from pydantic import BaseModel
 from llm_sdk.llm_sdk import Small_LLM_Model
@@ -30,6 +31,15 @@ class FunctionCallingEngine(BaseModel):
 
     def generate(self, prompt: str) -> str:
         """Generate the output."""
-        output = f'{{"prompt": "{prompt}",'
-        self._model.encode(f"{self._base_prompt}\n{output}")
-        return ""
+        prompt = f'{{\n  "prompt": "{prompt}",\n  "name": "'
+        output = f'{self._base_prompt}\n{prompt}'
+        print(prompt, end="")
+        while not output.endswith("}\n}\n"):
+            input_ids = self._model.encode(output)[0].tolist()
+            logits = self._model.get_logits_from_input_ids(input_ids)
+            logits_arr = np.array(logits)
+            next_id = np.argmax(logits_arr)
+            token = self._model.decode(next_id)
+            output += token
+            print(token, end="", flush=True)
+        return output
