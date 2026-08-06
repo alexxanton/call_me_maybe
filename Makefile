@@ -4,7 +4,7 @@ all: function
 install:
 	uv sync
 
-%: $(INPUT_DIR)/%_calling_tests.json $(INPUT_DIR)/%s_definition.json install
+%: $(INPUT_DIR)/%_calling_tests.json $(INPUT_DIR)/%s_definition.json
 	@uv run python -m src											\
 		--input					$(INPUT_DIR)/$@_calling_tests.json	\
 		--functions_definition	$(INPUT_DIR)/$@s_definition.json

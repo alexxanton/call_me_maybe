@@ -43,4 +43,3 @@ class JsonParser(BaseModel):
             self._path = Path(self.output_file)
             self._path.parent.mkdir(parents=True, exist_ok=True)
         self._path.write_text(output)
-        print(output)

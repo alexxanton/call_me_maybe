@@ -33,3 +33,22 @@ class BasePrompt(BaseModel):
         prompt = " ".join(self._raw_base_prompt.split())
         prompt += f"\nFunctions:\n{dump}"
         return prompt
+
+    def _alt_formatting(self) -> str:
+        """Unused due to worse LLM output."""
+        funcs = "\n\n".join(
+            "\n".join([
+                f"Name: {func.name}",
+                f"Description: {func.description}",
+                f"Parameters:",
+                *[
+                    f"  {name}: {type.type}"
+                    for name, type in func.parameters.items()
+                ],
+                f"Returns: {func.returns.type}"
+            ])
+            for func in self.functions
+        )
+        prompt = " ".join(self._raw_base_prompt.split())
+        prompt += f"\nFunctions:\n{funcs}"
+        return prompt
