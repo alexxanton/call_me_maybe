@@ -1,5 +1,10 @@
-from pydantic import BaseModel, ConfigDict
-from typing import Dict, Literal
+from pydantic import BaseModel, ConfigDict, StringConstraints
+from typing import Dict, Literal, Annotated
+
+
+Name = Annotated[
+    str, StringConstraints(pattern=r"^[a-zA-z_][a-zA-z0-9_]*$")
+]
 
 
 class Parameter(BaseModel):
@@ -11,9 +16,9 @@ class Parameter(BaseModel):
 class Function(BaseModel):
     """Defines a callable function and its parameters."""
     model_config = ConfigDict(extra="forbid")
-    name: str
+    name: Name
     description: str
-    parameters: Dict[str, Parameter]
+    parameters: Dict[Name, Parameter]
     returns: Parameter
 
 
