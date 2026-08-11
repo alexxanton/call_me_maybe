@@ -40,7 +40,7 @@ class BasePrompt(BaseModel):
             "\n".join([
                 f"Name: {func.name}",
                 f"Description: {func.description}",
-                f"Parameters:",
+                "Parameters:",
                 *[
                     f"  {name}: {type.type}"
                     for name, type in func.parameters.items()
