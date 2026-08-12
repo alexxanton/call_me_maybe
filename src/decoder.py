@@ -17,7 +17,8 @@ class ConstrainedDecoder(BaseModel):
         self._func_names = [f.name for f in functions]
         self._states = iter([
             f'{{\n  "prompt": "{prompt}",\n  "name": "',
-             ',\n  "parameters": {\n',
+            ',\n  "parameters": {\n',
+            '  }\n}'
         ])
         self._state = next(self._states)
         self._finished = False
@@ -46,7 +47,7 @@ class ConstrainedDecoder(BaseModel):
             return ""
         formatted_param = (
             f'    "{param[0]}": ' +
-            ('"' if param[1] == "string" else "")
+            ('"' if param[1].type == "string" else "")
         )
         return formatted_param
 
