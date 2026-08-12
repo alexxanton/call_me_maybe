@@ -62,7 +62,7 @@ class FunctionCallingEngine(BaseModel):
                     if 0 <= allowed < len(mask):
                         mask[allowed] = False
                 np_logits[mask] = -float("inf")
-                allowed_tokens = None
+                allowed_tokens = set()
 
             next_id = int(np.argmax(np_logits))
             if next_id == self._vocab.get('"'):

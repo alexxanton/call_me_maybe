@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from .validation import Function
-from typing import List, Iterator, Dict, Set
+from .validation import Function, Parameter
+from typing import List, Iterator, Dict, Set, Tuple
 
 
 class ConstrainedDecoder(BaseModel):
@@ -22,8 +22,9 @@ class ConstrainedDecoder(BaseModel):
         self._state = next(self._states)
         self._finished = False
         self._func_name = ""
+        self._last_param_reached = False
 
-    def _get_params(self, name: str) -> Iterator[str]:
+    def _get_params(self, name: str) -> Iterator[Tuple[str, Parameter]]:
         """Get parameters from function."""
         func = next((f for f in self.functions if f.name == name), None)
         if func is None:
@@ -45,7 +46,7 @@ class ConstrainedDecoder(BaseModel):
             return ""
         formatted_param = (
             f'    "{param[0]}": ' +
-            ('"' if param[1].type == "string" else "")
+            ('"' if param[1] == "string" else "")
         )
         return formatted_param
 
