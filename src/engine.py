@@ -36,7 +36,7 @@ class FunctionCallingEngine(BaseModel):
         decoder = ConstrainedDecoder(prompt, self.functions)
         input_ids = self._get_input_ids(f'{self._base_prompt}\n')
         output_start_idx = len(self._model.decode(input_ids))
-        input_ids += self._get_input_ids(f"{decoder.state}")
+        input_ids += self._get_input_ids(decoder.state)
         name_complete = False
         text_idx = output_start_idx
         param_complete = True
@@ -56,21 +56,30 @@ class FunctionCallingEngine(BaseModel):
 
             logits = self._model.get_logits_from_input_ids(input_ids)
             np_logits = np.array(logits)
+
             if allowed_tokens:
                 mask = np.ones_like(np_logits, dtype=bool)
                 for allowed in allowed_tokens:
                     if 0 <= allowed < len(mask):
                         mask[allowed] = False
+
                 np_logits[mask] = -float("inf")
                 allowed_tokens = set()
 
             next_id = int(np.argmax(np_logits))
             if next_id == self._vocab.get('"'):
                 name_complete = True
+            if "\n" in self._model.decode(next_id):
+                param_complete = True
+                decoder.close_param()
             input_ids.append(next_id)
 
             text = self._model.decode(input_ids)
             print(text[text_idx:], end="", flush=True)
+            #print(f"({self._model.decode(next_id)})"+text[text_idx:], end="", flush=True)
             text_idx = len(text)
+        input_ids += self._get_input_ids(decoder.state)
+        text = self._model.decode(input_ids)
+        print(text[text_idx:])
 
         return self._model.decode(input_ids)
