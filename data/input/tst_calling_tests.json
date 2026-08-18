@@ -1,5 +1,11 @@
 [
 	{
+		"prompt": "Is 'racecar' a palindrome?"
+	},
+	{
+		"prompt": "Extract all numbers from 'I have 12 apples and 7 oranges'"
+	},
+	{
 		"prompt": "What is the average of 12, 18, and 24?"
 	},
 	{
@@ -24,9 +30,6 @@
 		"prompt": "Replace every occurrence of 'cat' with 'dog' in 'The cat chased another cat'"
 	},
 	{
-		"prompt": "Is 'racecar' a palindrome?"
-	},
-	{
 		"prompt": "Find the largest number among 14, 82, 37, and 51"
 	},
 	{
@@ -34,9 +37,6 @@
 	},
 	{
 		"prompt": "Calculate the square root of 81"
-	},
-	{
-		"prompt": "Extract all numbers from 'I have 12 apples and 7 oranges'"
 	},
 	{
 		"prompt": "How many characters are in 'programming'?"
