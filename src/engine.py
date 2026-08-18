@@ -1,5 +1,6 @@
 import json
 import numpy as np
+from time import sleep
 from typing import List
 from pydantic import BaseModel
 from .validation import Function
@@ -23,36 +24,52 @@ class FunctionCallingEngine(BaseModel):
         from llm_sdk.llm_sdk import Small_LLM_Model
         self._model = Small_LLM_Model()
         path = self._model.get_path_to_vocab_file()
+        self._text_idx = 0
         with open(path, "r", encoding="utf-8") as f:
             self._vocab = json.load(f)
-        self._id_values = {v: k for k, v in self._vocab.items()}
+
+    def _typewrite(self, input_ids: List[int]) -> None:
+        """Print the output with a typewriter effect."""
+        text = self._model.decode(input_ids[self._text_idx:])
+        for c in text:
+            print(c, end="", flush=True)
+            sleep(.005)
+        self._text_idx = len(input_ids)
 
     def _get_input_ids(self, output: str) -> List[int]:
         """Encode a string and return as a list of ints."""
         return self._model.encode(output)[0].tolist()
 
+    def _print_top(self, np_logits) -> None:
+        top_ids = np.argsort(np_logits)[-10:][::-1]
+
+        for token_id in top_ids:
+            print(
+                token_id,
+                repr(self._model.decode(int(token_id))),
+                np_logits[token_id],
+            )
+
     def generate(self, prompt: str) -> str:
         """Generate the output."""
-        decoder = ConstrainedDecoder(prompt, self.functions)
+        decoder = ConstrainedDecoder(prompt, self.functions, self._vocab)
         input_ids = self._get_input_ids(f'{self._base_prompt}\n')
-        output_start_idx = len(self._model.decode(input_ids))
+        output_start_idx = len(input_ids)
         input_ids += self._get_input_ids(decoder.state)
-        name_complete = False
-        text_idx = output_start_idx
-        param_complete = True
+        self._text_idx = output_start_idx
 
         while not decoder.finished:
-            if not name_complete:
+            if not decoder.name_complete:
                 allowed_tokens = decoder.get_name_tokens(
-                    self._model.decode(input_ids), self._vocab, self._id_values
+                    self._model.decode(input_ids)
                 )
             elif not decoder.func_name:
                 decoder.retrieve_func_name(self._model.decode(input_ids))
                 input_ids += self._get_input_ids(decoder.state)
 
-            if name_complete and param_complete:
+            if decoder.name_complete and decoder.param_complete:
                 input_ids += self._get_input_ids(decoder.inject_next_param())
-                param_complete = False
+                decoder.param_complete = False
 
             logits = self._model.get_logits_from_input_ids(input_ids)
             np_logits = np.array(logits)
@@ -68,18 +85,15 @@ class FunctionCallingEngine(BaseModel):
 
             next_id = int(np.argmax(np_logits))
             if next_id == self._vocab.get('"'):
-                name_complete = True
-            if "\n" in self._model.decode(next_id):
-                param_complete = True
+                decoder.name_complete = True
+            if "\n" in self._model.decode([next_id]):
+                decoder.param_complete = True
                 decoder.close_param()
             input_ids.append(next_id)
 
-            text = self._model.decode(input_ids)
-            print(text[text_idx:], end="", flush=True)
-            #print(f"({self._model.decode(next_id)})"+text[text_idx:], end="", flush=True)
-            text_idx = len(text)
+            self._typewrite(input_ids)
+            #self._typewrite(f"({self._model.decode(next_id)})"+text[text_idx:])
         input_ids += self._get_input_ids(decoder.state)
-        text = self._model.decode(input_ids)
-        print(text[text_idx:])
+        self._typewrite(input_ids)
 
-        return self._model.decode(input_ids)
+        return self._model.decode(input_ids[output_start_idx:])

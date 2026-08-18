@@ -9,11 +9,16 @@ class ConstrainedDecoder(BaseModel):
 
     prompt: str
     functions: List[Function]
+    vocab: Dict[str, int]
 
-    def __init__(self, prompt: str, functions: List[Function]) -> None:
+    def __init__(
+        self, prompt: str, functions: List[Function], vocab: Dict[str, int]
+    ) -> None:
         """Initialize the constrained decoder."""
-        super().__init__(prompt=prompt, functions=functions)
+        prompt = prompt.replace('"', '\\"')
+        super().__init__(prompt=prompt, functions=functions, vocab=vocab)
 
+        self._id_values = {v: k for k, v in vocab.items()}
         self._prefix = '"name": "'
         self._func_names = [f.name for f in functions]
         self._states = iter([
@@ -22,19 +27,21 @@ class ConstrainedDecoder(BaseModel):
             '  }\n}'
         ])
         self._state = next(self._states)
-        self._next_param: Optional[Parameter] = None
+        self._next_param: Optional[Tuple[str, Parameter]] = None
         self._finished = False
         self._func_name = ""
         self._last_param_reached = False
-        self._params = None
+        self._params: Optional[Iterator[Tuple[str, Parameter]]] = None
+        self._name_complete = False
+        self._param_complete = True
 
-    def _get_params(self, name: str) -> Iterator[Tuple[str, Parameter]]:
+    def _get_params(self, name: str) -> None:
         """Get parameters from function."""
         func = next((f for f in self.functions if f.name == name), None)
         if func is None:
-            return iter([])
+            return
         self._params = iter(func.parameters.items())
-        self._next_param = next(self._params)
+        self._next_param = next(self._params, None)
 
     def retrieve_func_name(self, output: str) -> None:
         """Get function name from generated output."""
@@ -49,13 +56,11 @@ class ConstrainedDecoder(BaseModel):
         """Get alowed tokens for number parameters."""
         allowed = set()
 
-    def get_name_tokens(
-        self, output: str, vocab: Dict[str, int], id_values: Dict[int, str]
-    ) -> Set[int]:
+    def get_name_tokens(self, output: str) -> Set[int]:
         """Get allowed tokens for function name."""
         name = output.split(self._prefix)[-1]
         allowed = set()
-        for key, val in id_values.items():
+        for key, val in self._id_values.items():
             candidate = name + val
             if candidate in self._func_names:
                 allowed.add(key)
@@ -63,7 +68,7 @@ class ConstrainedDecoder(BaseModel):
                 allowed.add(key)
 
             if name in self._func_names:
-                dquote = vocab.get('"')
+                dquote = self.vocab.get('"')
                 if dquote is not None:
                     allowed.add(dquote)
         return allowed
@@ -71,6 +76,8 @@ class ConstrainedDecoder(BaseModel):
     def inject_next_param(self) -> str:
         """Inject the next parameter from the function."""
         param = self._next_param
+        if param is None:
+            return ""
         self._next_param = next(self._params, None)
         if self._next_param is None:
             self._last_param_reached = True
@@ -78,7 +85,6 @@ class ConstrainedDecoder(BaseModel):
             f'    "{param[0]}": ' +
             ('"' if param[1].type == "string" else "")
         )
-        #print("(OK)", end="")
         return formatted_param
 
     def close_param(self) -> None:
@@ -101,3 +107,23 @@ class ConstrainedDecoder(BaseModel):
     def finished(self) -> bool:
         """Get decoder finish status."""
         return self._finished
+
+    @property
+    def name_complete(self) -> bool:
+        """Get name completion state."""
+        return self._name_complete
+
+    @name_complete.setter
+    def name_complete(self, b: bool) -> None:
+        """Set name completion state."""
+        self._name_complete = b
+
+    @property
+    def param_complete(self) -> bool:
+        """Get param completion state."""
+        return self._param_complete
+
+    @param_complete.setter
+    def param_complete(self, b: bool) -> None:
+        """Set param completion state."""
+        self._param_complete = b
