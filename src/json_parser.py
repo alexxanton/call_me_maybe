@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from pydantic import BaseModel
 from json.decoder import JSONDecodeError
-from typing import List, Optional, TypeVar
+from typing import List, Dict, Optional, TypeVar
 from .validation import Function, Prompt
 
 
@@ -27,6 +27,7 @@ class JsonParser(BaseModel):
             functions=functions, prompts=prompts, output_file=output_file
         )
         self._path: Optional[Path] = None
+        self._outputs = []
 
     def _load_file(self, file: str, model: type[T]) -> List[T]:
         """Reads a JSON file and validates it."""
@@ -37,9 +38,16 @@ class JsonParser(BaseModel):
         except (OSError, JSONDecodeError) as e:
             raise RuntimeError(f"Failed to load {file}: {e}") from e
 
-    def write_to_output_file(self, output: str) -> None:
+    def write_to_output_file(self) -> None:
         """Write the generated output from the LLM to the output file."""
         if self._path is None:
             self._path = Path(self.output_file)
             self._path.parent.mkdir(parents=True, exist_ok=True)
-        self._path.write_text(output)
+        self._path.write_text(json.dumps(self._outputs, indent=2))
+
+    def append_output(self, output: str) -> None:
+        """Adds a function object to the outputs list."""
+        try:
+            self._outputs.append(json.loads(output))
+        except JSONDecodeError:
+            print("Invalid JSON")

@@ -35,10 +35,12 @@ def main() -> None:
         print(test)
         output = engine.generate(test.prompt)
         print()
-        try:
-            json_parser.write_to_output_file(output)
-        except OSError as e:
-            print(e)
+        json_parser.append_output(output)
+
+    try:
+        json_parser.write_to_output_file()
+    except OSError as e:
+        print(e)
 
 
 if __name__ == "__main__":
