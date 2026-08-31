@@ -1,7 +1,7 @@
 import re
 from pydantic import BaseModel
 from .validation import Function, Parameter
-from typing import List, Iterator, Dict, Set, Tuple, Optional
+from typing import List, Iterator, Dict, Set, Tuple, Optional, ClassVar
 
 
 class ConstrainedDecoder(BaseModel):
@@ -35,6 +35,8 @@ class ConstrainedDecoder(BaseModel):
         self._name_complete = False
         self._param_complete = True
 
+        self._alpha_num = { v: k for k, v in vocab.items() if re.match("[A-Za-z0-9]", k)}
+
     def _get_params(self, name: str) -> None:
         """Get parameters from function."""
         func = next((f for f in self.functions if f.name == name), None)
@@ -60,7 +62,7 @@ class ConstrainedDecoder(BaseModel):
         """Get allowed tokens for function name."""
         name = output.split(self._prefix)[-1]
         allowed = set()
-        for key, val in self._id_values.items():
+        for key, val in self._alpha_num.items():
             candidate = name + val
             if candidate in self._func_names:
                 allowed.add(key)

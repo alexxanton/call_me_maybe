@@ -34,6 +34,7 @@ class FunctionCallingEngine(BaseModel):
         for c in text:
             print(c, end="", flush=True)
             sleep(.005)
+        #print(".", end="")
         self._text_idx = len(input_ids)
 
     def _get_input_ids(self, output: str) -> List[int]:
@@ -46,7 +47,7 @@ class FunctionCallingEngine(BaseModel):
         for token_id in top_ids:
             print(
                 token_id,
-                repr(self._model.decode(int(token_id))),
+                repr(self._model.decode([int(token_id)])),
                 np_logits[token_id],
             )
 
