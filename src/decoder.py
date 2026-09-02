@@ -35,7 +35,12 @@ class ConstrainedDecoder(BaseModel):
         self._name_complete = False
         self._param_complete = True
 
-        self._alpha_num = { v: k for k, v in vocab.items() if re.match("[A-Za-z0-9]", k)}
+        self._alpha_num = {
+            v: k for k, v in vocab.items()
+            if re.fullmatch("[A-Za-z0-9_]+", k)
+            and any(k in f for f in self._func_names)
+        }
+        print(len(self._alpha_num))
 
     def _get_params(self, name: str) -> None:
         """Get parameters from function."""
