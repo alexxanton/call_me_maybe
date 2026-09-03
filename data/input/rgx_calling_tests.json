@@ -1,90 +1,21 @@
 [
   {
-    "prompt": "Replace every digit character in \"abc123def\" with X"
-  },
-  {
-    "prompt": "Replace every non-digit character in \"abc123def\" with X"
-  },
-  {
-    "prompt": "Replace every whitespace character in \"hello world\" with _"
-  },
-  {
-    "prompt": "Replace every non-whitespace character in \"hello world\" with X"
-  },
-  {
-    "prompt": "Replace every word character in \"hello!\" with X"
-  },
-  {
-    "prompt": "Replace every non-word character in \"hello!\" with X"
-  },
-  {
-    "prompt": "Replace every lowercase letter in \"Hello WORLD\" with x"
-  },
-  {
-    "prompt": "Replace every uppercase letter in \"hello WORLD\" with x"
-  },
-  {
-    "prompt": "Replace every vowel in \"hello world\" with *"
-  },
-  {
-    "prompt": "Replace every consonant in \"hello world\" with *"
-  },
-  {
-    "prompt": "Replace every sequence of digits in \"abc123def456\" with NUMBER"
-  },
-  {
-    "prompt": "Replace every sequence of whitespace characters in \"hello   world\" with _"
-  },
-  {
-    "prompt": "Replace every sequence of non-digit characters in \"123abc456def\" with TEXT"
-  },
-  {
-    "prompt": "Replace every sequence of word characters in \"hello123 world456\" with WORD"
+    "prompt": "Remove every character that is not a letter or a space from \"Hello123! World?\""
   },
   {
     "prompt": "Replace every sequence of non-word characters in \"hello!!! world???\" with PUNCT"
   },
   {
+    "prompt": "Replace every whitespace character in \"hello world\" with _"
+  },
+  {
+    "prompt": "Replace every sequence of digits in \"abc123def456\" with NUMBER"
+  },
+  {
     "prompt": "Replace every three-digit number in \"I have 123 apples and 45 oranges\" with NUM"
   },
   {
-    "prompt": "Replace every four-letter word in \"This is some nice test code\" with FOUR"
-  },
-  {
-    "prompt": "Replace every occurrence of \"cat\" with \"dog\" in \"cat sat on cat\""
-  },
-  {
-    "prompt": "Replace every occurrence of \"hello\" with \"hi\" in \"hello hello world\""
-  },
-  {
-    "prompt": "Replace every occurrence of the word \"cat\" with \"dog\" in \"the cat is next to the catfish\""
-  },
-  {
-    "prompt": "Replace every word starting with \"c\" in \"cat dog car cup\" with WORD"
-  },
-  {
-    "prompt": "Replace every word ending with \"ing\" in \"running jumping walk\" with ACTION"
-  },
-  {
-    "prompt": "Replace every email address in \"Email alice@example.com today\" with EMAIL"
-  },
-  {
-    "prompt": "Replace every URL starting with \"http\" in \"Visit http://example.com now\" with URL"
-  },
-  {
-    "prompt": "Replace every hexadecimal color such as \"#FF0000\" in \"Colors #FF0000 and #00FF00\" with COLOR"
-  },
-  {
-    "prompt": "Remove every character that is not a letter or a space from \"Hello123! World?\""
-  },
-  {
-    "prompt": "Replace every run of two or more spaces in \"hello   world  again\" with a single underscore"
-  },
-  {
     "prompt": "Replace every number surrounded by word boundaries in \"I have 42 apples and 7 oranges\" with NUM"
-  },
-  {
-    "prompt": "Replace every repeated vowel sequence in \"coool beeeautiful\" with VOWEL"
   }
 ]
 
