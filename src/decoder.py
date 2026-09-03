@@ -61,7 +61,9 @@ class ConstrainedDecoder(BaseModel):
         self, vocab: Dict[str, int], id_values: Dict[int, str]
     ) -> Set[int]:
         """Get alowed tokens for number parameters."""
-        allowed = set()
+        allowed = {
+            "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ",", "-", "."
+        }
 
     def get_name_tokens(self, output: str) -> Set[int]:
         """Get allowed tokens for function name."""
