@@ -1,0 +1,62 @@
+[
+	{
+		"prompt": "Enable the music"
+	},
+	{
+		"prompt": "Disable the music"
+	},
+	{
+		"prompt": "Turn fullscreen on"
+	},
+	{
+		"prompt": "Turn fullscreen off"
+	},
+	{
+		"prompt": "Set the player to invincible"
+	},
+	{
+		"prompt": "Make the player vulnerable"
+	},
+	{
+		"prompt": "Configure the player with 5 lives, a speed of 4.5, and invincibility enabled"
+	},
+	{
+		"prompt": "Configure the player with 2 lives, a speed of 7.25, and invincibility disabled"
+	},
+	{
+		"prompt": "Set 10 lives, a movement speed of 3.5, and enable god mode"
+	},
+	{
+		"prompt": "Set 3 lives, a movement speed of 8.25, and turn god mode off"
+	},
+	{
+		"prompt": "Create a player with 100 health, 6.5 speed, and multiplayer enabled"
+	},
+	{
+		"prompt": "Create a player with 50 health, 4.25 speed, and multiplayer disabled"
+	},
+	{
+		"prompt": "Set the door to locked"
+	},
+	{
+		"prompt": "Unlock the door"
+	},
+	{
+		"prompt": "Enable debug mode"
+	},
+	{
+		"prompt": "Disable debug mode"
+	},
+	{
+		"prompt": "Set the enemy to hostile"
+	},
+	{
+		"prompt": "Make the enemy non-hostile"
+	},
+	{
+		"prompt": "Create an enemy with 75 health, 2.5 speed, and make it hostile"
+	},
+	{
+		"prompt": "Create an enemy with 120 health, 3.75 speed, and make it non-hostile"
+	}
+]

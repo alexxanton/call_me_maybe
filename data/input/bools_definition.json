@@ -1,0 +1,158 @@
+[
+	{
+		"name": "fn_set_music_enabled",
+		"description": "Enable or disable the music.",
+		"parameters": {
+			"enabled": {
+				"type": "boolean"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_set_fullscreen",
+		"description": "Enable or disable fullscreen mode.",
+		"parameters": {
+			"fullscreen": {
+				"type": "boolean"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_set_invincible",
+		"description": "Set whether the player is invincible.",
+		"parameters": {
+			"invincible": {
+				"type": "boolean"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_configure_player",
+		"description": "Configure a player using an integer number of lives, a floating point movement speed, and a boolean invincibility setting.",
+		"parameters": {
+			"lives": {
+				"type": "integer"
+			},
+			"speed": {
+				"type": "number"
+			},
+			"invincible": {
+				"type": "boolean"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_configure_multiplayer",
+		"description": "Configure a player using an integer health value, a floating point movement speed, and a boolean multiplayer setting.",
+		"parameters": {
+			"health": {
+				"type": "integer"
+			},
+			"speed": {
+				"type": "number"
+			},
+			"multiplayer": {
+				"type": "boolean"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_set_door_locked",
+		"description": "Set whether a door is locked.",
+		"parameters": {
+			"locked": {
+				"type": "boolean"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_set_debug_mode",
+		"description": "Enable or disable debug mode.",
+		"parameters": {
+			"enabled": {
+				"type": "boolean"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_set_enemy_hostile",
+		"description": "Set whether an enemy is hostile.",
+		"parameters": {
+			"hostile": {
+				"type": "boolean"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_configure_enemy",
+		"description": "Configure an enemy using an integer health value, a floating point movement speed, and a boolean hostile setting.",
+		"parameters": {
+			"health": {
+				"type": "integer"
+			},
+			"speed": {
+				"type": "number"
+			},
+			"hostile": {
+				"type": "boolean"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_add_integers",
+		"description": "Add two integers together and return their sum.",
+		"parameters": {
+			"a": {
+				"type": "integer"
+			},
+			"b": {
+				"type": "integer"
+			}
+		},
+		"returns": {
+			"type": "integer"
+		}
+	},
+	{
+		"name": "fn_add_floats",
+		"description": "Add two floating point numbers together and return their sum.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			},
+			"b": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	}
+]

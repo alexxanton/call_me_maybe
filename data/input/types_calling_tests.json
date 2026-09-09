@@ -1,0 +1,68 @@
+[
+	{
+		"prompt": "Add 12 and 8"
+	},
+	{
+		"prompt": "Add 3.14 and 2.71"
+	},
+	{
+		"prompt": "Multiply 7 by 6"
+	},
+	{
+		"prompt": "Multiply 2.5 by 4.2"
+	},
+	{
+		"prompt": "Divide 15 by 3"
+	},
+	{
+		"prompt": "Divide 10.5 by 2.5"
+	},
+	{
+		"prompt": "Calculate the square root of 144"
+	},
+	{
+		"prompt": "Calculate the square root of 12.25"
+	},
+	{
+		"prompt": "Is 42 even?"
+	},
+	{
+		"prompt": "Is 17 even?"
+	},
+	{
+		"prompt": "Is 3.14 positive?"
+	},
+	{
+		"prompt": "Is -2.5 positive?"
+	},
+	{
+		"prompt": "Is 10 greater than 5?"
+	},
+	{
+		"prompt": "Is 3.5 greater than 7.25?"
+	},
+	{
+		"prompt": "Set the feature to enabled"
+	},
+	{
+		"prompt": "Disable the feature"
+	},
+	{
+		"prompt": "Check if a 25 year old is an adult"
+	},
+	{
+		"prompt": "Check if a 16 year old is an adult"
+	},
+	{
+		"prompt": "Set the volume to 75.5"
+	},
+	{
+		"prompt": "Set the number of lives to 3"
+	},
+	{
+		"prompt": "Configure the player with 5 lives, a speed of 4.5, and invincibility enabled"
+	},
+	{
+		"prompt": "Configure the player with 2 lives, a speed of 7.25, and invincibility disabled"
+	}
+]

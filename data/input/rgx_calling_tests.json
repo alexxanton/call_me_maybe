@@ -1,6 +1,6 @@
 [
   {
-    "prompt": "Remove every character that is not a letter or a space from \"Hello123! World?\""
+    "prompt": "Remove every character that is not a letter or a \\ space from \"Hello123! World?\""
   },
   {
     "prompt": "Replace every sequence of non-word characters in \"hello!!! world???\" with PUNCT"

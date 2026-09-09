@@ -1,0 +1,209 @@
+[
+	{
+		"name": "fn_add_integers",
+		"description": "Add two integers together and return their sum.",
+		"parameters": {
+			"a": {
+				"type": "integer"
+			},
+			"b": {
+				"type": "integer"
+			}
+		},
+		"returns": {
+			"type": "integer"
+		}
+	},
+	{
+		"name": "fn_add_floats",
+		"description": "Add two floating point numbers together and return their sum.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			},
+			"b": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_multiply_integers",
+		"description": "Multiply two integers together and return their product.",
+		"parameters": {
+			"a": {
+				"type": "integer"
+			},
+			"b": {
+				"type": "integer"
+			}
+		},
+		"returns": {
+			"type": "integer"
+		}
+	},
+	{
+		"name": "fn_multiply_floats",
+		"description": "Multiply two floating point numbers together and return their product.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			},
+			"b": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_divide_integers",
+		"description": "Divide one integer by another integer and return the result as an integer.",
+		"parameters": {
+			"dividend": {
+				"type": "integer"
+			},
+			"divisor": {
+				"type": "integer"
+			}
+		},
+		"returns": {
+			"type": "integer"
+		}
+	},
+	{
+		"name": "fn_divide_floats",
+		"description": "Divide one floating point number by another floating point number and return the result.",
+		"parameters": {
+			"dividend": {
+				"type": "number"
+			},
+			"divisor": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_get_square_root",
+		"description": "Calculate the square root of a number.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_is_even",
+		"description": "Check whether an integer is even. Return true if it is even and false otherwise.",
+		"parameters": {
+			"number": {
+				"type": "integer"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_is_positive",
+		"description": "Check whether a number is greater than zero. Return true if it is positive and false otherwise.",
+		"parameters": {
+			"number": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_is_greater_than",
+		"description": "Check whether the first number is greater than the second number.",
+		"parameters": {
+			"a": {
+				"type": "number"
+			},
+			"b": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_set_enabled",
+		"description": "Enable or disable a feature.",
+		"parameters": {
+			"enabled": {
+				"type": "boolean"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_is_adult",
+		"description": "Check whether a person's age is at least 18.",
+		"parameters": {
+			"age": {
+				"type": "integer"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	},
+	{
+		"name": "fn_set_volume",
+		"description": "Set the volume to a floating point value.",
+		"parameters": {
+			"volume": {
+				"type": "number"
+			}
+		},
+		"returns": {
+			"type": "number"
+		}
+	},
+	{
+		"name": "fn_set_lives",
+		"description": "Set the number of lives to an integer value.",
+		"parameters": {
+			"lives": {
+				"type": "integer"
+			}
+		},
+		"returns": {
+			"type": "integer"
+		}
+	},
+	{
+		"name": "fn_configure_player",
+		"description": "Configure a player using an integer number of lives, a floating point movement speed, and a boolean invincibility setting.",
+		"parameters": {
+			"lives": {
+				"type": "integer"
+			},
+			"speed": {
+				"type": "number"
+			},
+			"invincible": {
+				"type": "boolean"
+			}
+		},
+		"returns": {
+			"type": "boolean"
+		}
+	}
+]
