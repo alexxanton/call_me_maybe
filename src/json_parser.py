@@ -1,4 +1,5 @@
 from __future__ import annotations
+import re
 import json
 from pathlib import Path
 from pydantic import BaseModel
@@ -47,6 +48,11 @@ class JsonParser(BaseModel):
 
     def append_output(self, output: str) -> None:
         """Adds a function object to the outputs list."""
+        output = re.sub(
+            r'(?<!\\)(?:\\\\)*\\(?=[^"\\/bfnrtu])',
+            lambda m: m.group() + '\\',
+            output
+        )
         try:
             self._outputs.append(json.loads(output))
         except JSONDecodeError:
