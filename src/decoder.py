@@ -10,12 +10,13 @@ class ConstrainedDecoder(BaseModel):
     prompt: str
     functions: List[Function]
     vocab: Dict[str, int]
+    alpha_num: ClassVar[Optional[Dict[int, str]]] = None
 
     def __init__(
         self, prompt: str, functions: List[Function], vocab: Dict[str, int]
     ) -> None:
         """Initialize the constrained decoder."""
-        prompt = prompt.replace('"', '\\"')
+        prompt = prompt.replace("\\", "\\\\").replace('"', '\\"')
         super().__init__(prompt=prompt, functions=functions, vocab=vocab)
 
         self._id_values = {v: k for k, v in vocab.items()}
@@ -31,16 +32,18 @@ class ConstrainedDecoder(BaseModel):
         self._finished = False
         self._func_name = ""
         self._last_param_reached = False
-        self._params: Optional[Iterator[Tuple[str, Parameter]]] = None
+        self._params: Iterator[Tuple[str, Parameter]] = iter(())
         self._name_complete = False
         self._param_complete = True
 
-        self._alpha_num = {
-            v: k for k, v in vocab.items()
-            if re.fullmatch("[A-Za-z0-9_]+", k)
-            and any(k in f for f in self._func_names)
-        }
-        print(len(self._alpha_num))
+        if ConstrainedDecoder.alpha_num is None:
+            ConstrainedDecoder.alpha_num = {
+                v: k for k, v in vocab.items()
+                if re.fullmatch("[A-Za-z0-9_]+", k)
+                and any(k in f for f in self._func_names)
+            }
+
+        self._alpha_num = ConstrainedDecoder.alpha_num
 
     def _get_params(self, name: str) -> None:
         """Get parameters from function."""
