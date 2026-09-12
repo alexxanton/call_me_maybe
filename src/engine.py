@@ -75,6 +75,9 @@ class FunctionCallingEngine(BaseModel):
             logits = self._model.get_logits_from_input_ids(input_ids)
             np_logits = np.array(logits)
 
+            if decoder.name_complete:
+                allowed_tokens = decoder.get_allowed_tokens()
+
             if allowed_tokens:
                 mask = np.ones_like(np_logits, dtype=bool)
                 for allowed in allowed_tokens:

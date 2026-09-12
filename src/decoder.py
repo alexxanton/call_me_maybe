@@ -35,6 +35,7 @@ class ConstrainedDecoder(BaseModel):
         self._params: Iterator[Tuple[str, Parameter]] = iter(())
         self._name_complete = False
         self._param_complete = True
+        self._param_type = ""
 
         if ConstrainedDecoder.alpha_num is None:
             ConstrainedDecoder.alpha_num = {
@@ -60,13 +61,34 @@ class ConstrainedDecoder(BaseModel):
         self._get_params(name)
         self._func_name = name
 
-    def get_num_tokens(
-        self, vocab: Dict[str, int], id_values: Dict[int, str]
-    ) -> Set[int]:
-        """Get alowed tokens for number parameters."""
-        allowed = {
-            "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ",", "-", "."
-        }
+    def get_allowed_tokens(self, allowed = set(), **kwargs) -> Set[int]:
+        """Get allowed tokens for current parameter."""
+        if "reset" in kwargs and kwargs["reset"]:
+            allowed.clear()
+            return set()
+
+        newline_after_comma = ",Ċ"
+        newline = "Ċ"
+
+        selected_tokens = set()
+        match self._param_type:
+            case "number" | "integer" | "float" | "num" | "int":
+                selected_tokens = {
+                    "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "."
+                }
+            case "boolean" | "bool":
+                selected_tokens = {
+                    "true", "false"
+                }
+            case _:
+                return set()
+
+        if not allowed:
+            allowed.update(selected_tokens)
+
+        if not self._last_param_reached:
+            newline = newline_after_comma
+        return {self.vocab[n] for n in allowed | {newline}}
 
     def get_name_tokens(self, output: str) -> Set[int]:
         """Get allowed tokens for function name."""
@@ -87,10 +109,13 @@ class ConstrainedDecoder(BaseModel):
 
     def inject_next_param(self) -> str:
         """Inject the next parameter from the function."""
+        self._param_type = ""
+        self.get_allowed_tokens(reset=True) #  Rewrite allowed tokens set.
         param = self._next_param
         if param is None:
             return ""
         self._next_param = next(self._params, None)
+        self._param_type = param[1].type
         if self._next_param is None:
             self._last_param_reached = True
         formatted_param = (
