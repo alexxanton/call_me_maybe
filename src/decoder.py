@@ -2,7 +2,7 @@ import re
 import numpy as np
 from pydantic import BaseModel
 from .validation import Function, Parameter
-from typing import List, Iterator, Dict, Set, Tuple, Optional, ClassVar
+from typing import List, Iterator, Dict, Set, Tuple, Optional, ClassVar, Union
 
 
 class ConstrainedDecoder(BaseModel):
@@ -13,7 +13,7 @@ class ConstrainedDecoder(BaseModel):
     vocab: Dict[str, int]
     _func_tokens: ClassVar[Optional[Dict[int, str]]] = None
     _ids: ClassVar[Optional[Dict[int, str]]] = None
-    _numbers : ClassVar[Set[str]] = {
+    _numbers: ClassVar[Set[str]] = {
         "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
     }
 
@@ -83,15 +83,17 @@ class ConstrainedDecoder(BaseModel):
         return set()
 
     def get_allowed_tokens(
-        self, logits: np.array = None, allowed = set(), **kwargs
-    ) -> Set[int]:
+        self, logits: np.ndarray = np.array([]),
+        allowed: Set[str] = set(),
+        **kwargs: Union[str, bool]
+    ) -> np.ndarray:
         """Get allowed tokens for current parameter."""
         if "reset" in kwargs and kwargs["reset"]:
             allowed.clear()
-            return set()
+            return logits
 
         if "output" in kwargs:
-            allowed_tokens = self.get_name_tokens(kwargs["output"])
+            allowed_tokens = self.get_name_tokens(str(kwargs["output"]))
 
         newline = "Ċ" if self._last_param_reached else ",Ċ"
 
@@ -106,8 +108,8 @@ class ConstrainedDecoder(BaseModel):
         if self._name_complete:
             allowed_tokens = {self.vocab[n] for n in allowed | {newline}}
 
-        for allowed in allowed_tokens:
-            valid_logits[allowed] = logits[allowed]
+        for token in allowed_tokens:
+            valid_logits[token] = logits[token]
         return valid_logits
 
     def get_name_tokens(self, output: str) -> Set[int]:
@@ -130,7 +132,7 @@ class ConstrainedDecoder(BaseModel):
     def inject_next_param(self) -> str:
         """Inject the next parameter from the function."""
         self._param_type = ""
-        self.get_allowed_tokens(reset=True) #  Rewrite allowed tokens set.
+        self.get_allowed_tokens(reset=True)  # Rewrite allowed tokens set.
         param = self._next_param
         if param is None:
             return ""

@@ -34,13 +34,14 @@ class FunctionCallingEngine(BaseModel):
         for c in text:
             print(c, end="", flush=True)
             sleep(.005)
-        #print(".", end="")
+        # print(".", end="")
         self._text_idx = len(input_ids)
 
     def _get_input_ids(self, output: str) -> List[int]:
         """Encode a string and return as a list of ints."""
         return self._model.encode(output)[0].tolist()
 
+    """
     def _print_top(self, np_logits) -> None:
         top_ids = np.argsort(np_logits)[-10:][::-1]
 
@@ -50,6 +51,7 @@ class FunctionCallingEngine(BaseModel):
                 repr(self._model.decode([int(token_id)])),
                 np_logits[token_id],
             )
+    """
 
     def generate(self, prompt: str) -> str:
         """Generate the output."""

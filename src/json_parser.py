@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from pydantic import BaseModel
 from json.decoder import JSONDecodeError
-from typing import List, Dict, Optional, TypeVar
+from typing import List, Dict, Optional, TypeVar, Any
 from .validation import Function, Prompt
 
 
@@ -28,7 +28,7 @@ class JsonParser(BaseModel):
             functions=functions, prompts=prompts, output_file=output_file
         )
         self._path: Optional[Path] = None
-        self._outputs = []
+        self._outputs: List[Dict[str, Any]] = []
 
     def _load_file(self, file: str, model: type[T]) -> List[T]:
         """Reads a JSON file and validates it."""
