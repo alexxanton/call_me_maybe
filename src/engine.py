@@ -60,11 +60,7 @@ class FunctionCallingEngine(BaseModel):
         self._text_idx = output_start_idx
 
         while not decoder.finished:
-            if not decoder.name_complete:
-                allowed_tokens = decoder.get_name_tokens(
-                    self._model.decode(input_ids)
-                )
-            elif not decoder.func_name:
+            if not decoder.func_name and decoder.name_complete:
                 decoder.retrieve_func_name(self._model.decode(input_ids))
                 input_ids += self._get_input_ids(decoder.state)
 
@@ -74,18 +70,13 @@ class FunctionCallingEngine(BaseModel):
 
             logits = self._model.get_logits_from_input_ids(input_ids)
             np_logits = np.array(logits)
-
-            if decoder.name_complete:
-                allowed_tokens = decoder.get_allowed_tokens()
-
-            if allowed_tokens:
-                mask = np.ones_like(np_logits, dtype=bool)
-                for allowed in allowed_tokens:
-                    if 0 <= allowed < len(mask):
-                        mask[allowed] = False
-
-                np_logits[mask] = -float("inf")
-                allowed_tokens = set()
+            if not decoder.name_complete:
+                np_logits = decoder.get_allowed_tokens(
+                    np_logits,
+                    output=self._model.decode(input_ids)
+                )
+            else:
+                np_logits = decoder.get_allowed_tokens(np_logits)
 
             next_id = int(np.argmax(np_logits))
             if next_id == self._vocab.get('"'):
@@ -96,7 +87,6 @@ class FunctionCallingEngine(BaseModel):
             input_ids.append(next_id)
 
             self._typewrite(input_ids)
-            #self._typewrite(f"({self._model.decode(next_id)})"+text[text_idx:])
         input_ids += self._get_input_ids(decoder.state)
         self._typewrite(input_ids)
 

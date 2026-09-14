@@ -1,4 +1,5 @@
 import re
+import numpy as np
 from pydantic import BaseModel
 from .validation import Function, Parameter
 from typing import List, Iterator, Dict, Set, Tuple, Optional, ClassVar
@@ -10,7 +11,11 @@ class ConstrainedDecoder(BaseModel):
     prompt: str
     functions: List[Function]
     vocab: Dict[str, int]
-    alpha_num: ClassVar[Optional[Dict[int, str]]] = None
+    _func_tokens: ClassVar[Optional[Dict[int, str]]] = None
+    _ids: ClassVar[Optional[Dict[int, str]]] = None
+    _numbers : ClassVar[Set[str]] = {
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
+    }
 
     def __init__(
         self, prompt: str, functions: List[Function], vocab: Dict[str, int]
@@ -19,7 +24,6 @@ class ConstrainedDecoder(BaseModel):
         prompt = prompt.replace("\\", "\\\\").replace('"', '\\"')
         super().__init__(prompt=prompt, functions=functions, vocab=vocab)
 
-        self._id_values = {v: k for k, v in vocab.items()}
         self._prefix = '"name": "'
         self._func_names = [f.name for f in functions]
         self._states = iter([
@@ -37,14 +41,18 @@ class ConstrainedDecoder(BaseModel):
         self._param_complete = True
         self._param_type = ""
 
-        if ConstrainedDecoder.alpha_num is None:
-            ConstrainedDecoder.alpha_num = {
+        if ConstrainedDecoder._ids is None:
+            ConstrainedDecoder._ids = {v: k for k, v in vocab.items()}
+
+        if ConstrainedDecoder._func_tokens is None:
+            ConstrainedDecoder._func_tokens = {
                 v: k for k, v in vocab.items()
                 if re.fullmatch("[A-Za-z0-9_]+", k)
                 and any(k in f for f in self._func_names)
             }
 
-        self._alpha_num = ConstrainedDecoder.alpha_num
+        self._alpha_num = ConstrainedDecoder._func_tokens
+        self._id_values = ConstrainedDecoder._ids
 
     def _get_params(self, name: str) -> None:
         """Get parameters from function."""
@@ -61,34 +69,46 @@ class ConstrainedDecoder(BaseModel):
         self._get_params(name)
         self._func_name = name
 
-    def get_allowed_tokens(self, allowed = set(), **kwargs) -> Set[int]:
+    def _get_type_tokens(self) -> Set[str]:
+        """Get allowed tokens for each type."""
+        match self._param_type:
+            case "integer" | "int":
+                return ConstrainedDecoder._numbers
+            case "number" | "float" | "num":
+                return ConstrainedDecoder._numbers | {"-", "."}
+            case "boolean" | "bool":
+                return {"true", "false"}
+            case _:
+                return set()
+        return set()
+
+    def get_allowed_tokens(
+        self, logits: np.array = None, allowed = set(), **kwargs
+    ) -> Set[int]:
         """Get allowed tokens for current parameter."""
         if "reset" in kwargs and kwargs["reset"]:
             allowed.clear()
             return set()
 
-        newline_after_comma = ",Ċ"
-        newline = "Ċ"
+        if "output" in kwargs:
+            allowed_tokens = self.get_name_tokens(kwargs["output"])
 
-        selected_tokens = set()
-        match self._param_type:
-            case "number" | "integer" | "float" | "num" | "int":
-                selected_tokens = {
-                    "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "."
-                }
-            case "boolean" | "bool":
-                selected_tokens = {
-                    "true", "false"
-                }
-            case _:
-                return set()
+        newline = "Ċ" if self._last_param_reached else ",Ċ"
 
-        if not allowed:
+        if not allowed and self._name_complete:
+            selected_tokens = self._get_type_tokens()
+            if not selected_tokens:
+                return logits
             allowed.update(selected_tokens)
 
-        if not self._last_param_reached:
-            newline = newline_after_comma
-        return {self.vocab[n] for n in allowed | {newline}}
+        valid_logits = np.full_like(logits, -float("inf"))
+
+        if self._name_complete:
+            allowed_tokens = {self.vocab[n] for n in allowed | {newline}}
+
+        for allowed in allowed_tokens:
+            valid_logits[allowed] = logits[allowed]
+        return valid_logits
 
     def get_name_tokens(self, output: str) -> Set[int]:
         """Get allowed tokens for function name."""
