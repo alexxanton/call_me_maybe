@@ -1,0 +1,176 @@
+[
+	{
+		"name": "fn_person_name",
+		"description": "Represent a person's complete name. A complete name normally consists of a first name, a middle name, and a family or surname. This function stores the first and middle portions of the person's name.",
+		"parameters": {
+			"first": {
+				"type": "string"
+			},
+			"middle": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_book_info",
+		"description": "Represent information about a published book. Books commonly have a title, an author, and a publisher. This function records the title and author.",
+		"parameters": {
+			"title": {
+				"type": "string"
+			},
+			"author": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_key_value",
+		"description": "Represent an entry in a categorized configuration dictionary. Such entries have a key, a value, and may belong to a category. This function records the key and value.",
+		"parameters": {
+			"key": {
+				"type": "string"
+			},
+			"value": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_date_range",
+		"description": "Represent a period with a beginning and an ending, optionally associated with a calendar year. A complete date range concept normally contains a start, end, and year. This function stores the start and end.",
+		"parameters": {
+			"start": {
+				"type": "string"
+			},
+			"end": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_route",
+		"description": "Represent a journey between two locations. A complete journey description normally contains a source, destination, and method of transportation. This function stores only the source and destination.",
+		"parameters": {
+			"source": {
+				"type": "string"
+			},
+			"destination": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_address",
+		"description": "Represent a geographical address. A complete address commonly contains a street, city, and country. This function records the street and city.",
+		"parameters": {
+			"street": {
+				"type": "string"
+			},
+			"city": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_login",
+		"description": "Represent an account authentication request. Authentication information commonly consists of a username, password, and account role or group. This function records the username and password.",
+		"parameters": {
+			"username": {
+				"type": "string"
+			},
+			"password": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_message",
+		"description": "Represent a message. A complete message commonly contains a subject, message body, and recipient. This function stores the subject and message body.",
+		"parameters": {
+			"subject": {
+				"type": "string"
+			},
+			"message": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_period",
+		"description": "Represent a period of time using its beginning and ending. A period may also have an associated location. This function stores the beginning and ending.",
+		"parameters": {
+			"start": {
+				"type": "string"
+			},
+			"end": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_sequence_parts",
+		"description": "Represent ordered parts of a sequence. A sequence can conceptually contain a first part, middle part, and final part. This function stores the first and middle parts.",
+		"parameters": {
+			"first": {
+				"type": "string"
+			},
+			"middle": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_first",
+		"description": "Store the first portion of a multi-part structure. Such structures commonly also contain middle and final portions, but this function only accepts the first portion.",
+		"parameters": {
+			"first": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_middle",
+		"description": "Store the middle portion of a multi-part structure. Such structures commonly contain first and final portions as well, but this function only accepts the middle portion.",
+		"parameters": {
+			"middle": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	}
+]

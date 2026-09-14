@@ -1,0 +1,35 @@
+[
+	{
+		"prompt": "I want information about The Hobbit: the title is The Hobbit, the author is Tolkien, and the publisher is George Allen."
+	},
+	{
+		"prompt": "The trip has a source of Barcelona and a destination of Madrid. The transport method is train."
+	},
+	{
+		"prompt": "Set the route from Barcelona to Paris. The journey is by plane."
+	},
+	{
+		"prompt": "The address is on Gran Via in Barcelona. The country is Spain."
+	},
+	{
+		"prompt": "Store the address with street Main Street and city London. The country is England."
+	},
+	{
+		"prompt": "Create a message with subject Meeting and body See you tomorrow. The recipient is Alice."
+	},
+	{
+		"prompt": "Send a message whose subject is Hello and whose message says How are you? The recipient is Bob."
+	},
+	{
+		"prompt": "Set the beginning to sunrise and the end to sunset. The location for this period is Barcelona."
+	},
+	{
+		"prompt": "The event starts on Monday and ends on Wednesday. It takes place in Madrid."
+	},
+	{
+		"prompt": "Store the first part as Alpha and the middle part as Beta. The final part would normally be Gamma."
+	},
+	{
+		"prompt": "For this sequence, the first item is Alpha and the middle item is Beta. There would normally also be a final item."
+	}
+]
