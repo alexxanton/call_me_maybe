@@ -1,0 +1,50 @@
+[
+	{
+		"name": "fn_parse_coordinates",
+		"description": "Parse a coordinate written as three decimal components separated by periods, such as 1.2.3. The coordinate must preserve all three numeric components.",
+		"parameters": {
+			"coordinate": {
+				"type": "float"
+			}
+		},
+		"returns": {
+			"type": "float"
+		}
+	},
+	{
+		"name": "fn_version_measurement",
+		"description": "Store a measurement written in version-like notation with multiple decimal points, such as 1.2.3 or 10.25.7. Preserve the complete notation.",
+		"parameters": {
+			"measurement": {
+				"type": "float"
+			}
+		},
+		"returns": {
+			"type": "float"
+		}
+	},
+	{
+		"name": "fn_map_position",
+		"description": "Record a map position using three numeric components separated by periods, for example 12.34.56. Keep all components of the position.",
+		"parameters": {
+			"position": {
+				"type": "float"
+			}
+		},
+		"returns": {
+			"type": "float"
+		}
+	},
+	{
+		"name": "fn_location_value",
+		"description": "Convert a location value written as multiple decimal components, such as 41.38.2, into a numeric value without removing any components.",
+		"parameters": {
+			"location": {
+				"type": "float"
+			}
+		},
+		"returns": {
+			"type": "float"
+		}
+	}
+]

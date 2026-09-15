@@ -1,0 +1,26 @@
+[
+	{
+		"prompt": "The coordinate is 1.2.3. Parse the complete coordinate."
+	},
+	{
+		"prompt": "Parse this coordinate: 123.45.67"
+	},
+	{
+		"prompt": "Use 10.25.7 as the measurement, including every decimal component."
+	},
+	{
+		"prompt": "The measurement is 3.14.159. Preserve the entire value."
+	},
+	{
+		"prompt": "The map position is 12.34.56. Record all three numeric components."
+	},
+	{
+		"prompt": "The location value is 41.38.2. Use the complete value."
+	},
+	{
+		"prompt": "Convert the location 40.4.7 without dropping any of its components."
+	},
+	{
+		"prompt": "Use this location value exactly: 123.456.789"
+	}
+]
