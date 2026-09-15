@@ -1,3 +1,4 @@
+import sys
 import argparse
 from dotenv import load_dotenv
 from pydantic import ValidationError
@@ -28,12 +29,12 @@ def main() -> None:
             args.functions_definition, args.input, args.output
         )
     except (ValidationError, RuntimeError) as e:
-        exit(str(e))
+        sys.exit(str(e))
 
     try:
         engine = FunctionCallingEngine(json_parser.functions)
     except Exception as e:
-        exit(f"Error while initializating the engine: {e}")
+        sys.exit(f"Error while initializating the engine: {e}")
 
     for test in json_parser.prompts:
         output = engine.generate(test.prompt)
