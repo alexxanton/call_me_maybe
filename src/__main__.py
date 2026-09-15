@@ -29,12 +29,16 @@ def main() -> None:
         )
     except (ValidationError, RuntimeError) as e:
         exit(str(e))
-    engine = FunctionCallingEngine(json_parser.functions)
+
+    try:
+        engine = FunctionCallingEngine(json_parser.functions)
+    except Exception as e:
+        exit(f"Error while initializating the engine: {e}")
 
     for test in json_parser.prompts:
         output = engine.generate(test.prompt)
-        print("\n")
         json_parser.append_output(output)
+        print("\n")
 
     try:
         json_parser.write_to_output_file()
