@@ -25,6 +25,7 @@ class FunctionCallingEngine(BaseModel):
         self._model = Small_LLM_Model()
         path = self._model.get_path_to_vocab_file()
         self._text_idx = 0
+        self._last_token = ""
         with open(path, "r", encoding="utf-8") as f:
             self._vocab = json.load(f)
 
@@ -74,18 +75,21 @@ class FunctionCallingEngine(BaseModel):
             np_logits = np.array(logits)
             if not decoder.name_complete:
                 np_logits = decoder.get_allowed_tokens(
-                    np_logits,
-                    output=self._model.decode(input_ids)
+                    np_logits, output=self._model.decode(input_ids)
                 )
             else:
-                np_logits = decoder.get_allowed_tokens(np_logits)
+                np_logits = decoder.get_allowed_tokens(
+                    np_logits, last_token=self._last_token
+                )
 
             next_id = int(np.argmax(np_logits))
             if next_id == self._vocab.get('"'):
                 decoder.name_complete = True
-            if "\n" in self._model.decode([next_id]):
+            self._last_token = self._model.decode([next_id])
+            if "\n" in self._last_token:
                 decoder.param_complete = True
                 decoder.close_param()
+                self._last_token = ""
             input_ids.append(next_id)
 
             self._typewrite(input_ids)

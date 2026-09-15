@@ -80,7 +80,20 @@ class ConstrainedDecoder(BaseModel):
                 return {"true", "false"}
             case _:
                 return set()
-        return set()
+
+    def _remove_forbidden_tokens(
+        self, allowed: Set[str], newline: Set[str], last_token: str
+    ) -> None:
+        """Remove tokens that would break proper JSON output."""
+        if self._param_type not in ["string", "boolean", "bool"]:
+            if ((last_token.isnumeric() or last_token == "-")
+               and "-" in allowed):
+                allowed.remove("-")
+                newline.clear()
+        if self._param_type in ["number", "float", "num"]:
+            if last_token == "." and "." in allowed:
+                allowed.remove(".")
+                newline.clear()
 
     def get_allowed_tokens(
         self, logits: np.ndarray = np.array([]),
@@ -95,7 +108,8 @@ class ConstrainedDecoder(BaseModel):
         if "output" in kwargs:
             allowed_tokens = self.get_name_tokens(str(kwargs["output"]))
 
-        newline = "Ċ" if self._last_param_reached else ",Ċ"
+        newline = {"Ċ"} if self._last_param_reached else {",Ċ"}
+        last_token = str(kwargs.get("last_token", ""))
 
         if not allowed and self._name_complete:
             selected_tokens = self._get_type_tokens()
@@ -106,10 +120,12 @@ class ConstrainedDecoder(BaseModel):
         valid_logits = np.full_like(logits, -float("inf"))
 
         if self._name_complete:
-            allowed_tokens = {self.vocab[n] for n in allowed | {newline}}
+            self._remove_forbidden_tokens(allowed, newline, last_token)
+            allowed_tokens = {self.vocab[n] for n in allowed | newline}
 
         for token in allowed_tokens:
             valid_logits[token] = logits[token]
+
         return valid_logits
 
     def get_name_tokens(self, output: str) -> Set[int]:
