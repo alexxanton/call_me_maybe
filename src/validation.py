@@ -3,7 +3,7 @@ from typing import Dict, Literal, Annotated
 
 
 Name = Annotated[
-    str, StringConstraints(pattern=r"^[a-zA-z_][a-zA-z0-9_]*$")
+    str, StringConstraints(pattern=r"^[a-zA-Z_][a-zA-Z0-9_]*$")
 ]
 
 
