@@ -32,9 +32,8 @@ def main() -> None:
     engine = FunctionCallingEngine(json_parser.functions)
 
     for test in json_parser.prompts:
-        print(test)
         output = engine.generate(test.prompt)
-        print()
+        print("\n")
         json_parser.append_output(output)
 
     try:
