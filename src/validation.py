@@ -10,7 +10,16 @@ Name = Annotated[
 class Parameter(BaseModel):
     """Represents a function parameter or return value."""
     model_config = ConfigDict(extra="forbid")
-    type: Literal["number", "string"]
+    type: Literal[
+        "number",
+        "num",
+        "string",
+        "boolean",
+        "bool",
+        "integer",
+        "int",
+        "float"
+    ]
 
 
 class Function(BaseModel):
