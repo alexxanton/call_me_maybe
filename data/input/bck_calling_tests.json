@@ -1,0 +1,38 @@
+[
+	{
+		"prompt": "Store this message exactly: She said \"hello\" to me."
+	},
+	{
+		"prompt": "Store this message exactly: First line\nSecond line."
+	},
+	{
+		"prompt": "Store this text exactly: He said \"hello\"\nThen he left."
+	},
+	{
+		"prompt": "Preserve the escaped quotation marks in: \"Hello, world!\""
+	},
+	{
+		"prompt": "Preserve the newline escape in: Hello\nWorld"
+	},
+	{
+		"prompt": "Store this text exactly, including both escapes: \"Hello\"\n\"World\""
+	},
+	{
+		"prompt": "Preserve the backslash in this text: C:\\\\Users\\\\Alex"
+	},
+	{
+		"prompt": "Store this message with a tab escape: Hello\tWorld"
+	},
+	{
+		"prompt": "Store this text with a carriage return escape: Hello\rWorld"
+	},
+	{
+		"prompt": "Store this text with a backspace escape: Hello\bWorld"
+	},
+	{
+		"prompt": "Store this text with a form-feed escape: Hello\fWorld"
+	},
+	{
+		"prompt": "Store the complete message exactly: She said \\\"hello\\\"\\nThe path is C:\\\\Users\\\\Alex\\tDone."
+	}
+]

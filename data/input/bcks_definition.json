@@ -1,0 +1,26 @@
+[
+	{
+		"name": "fn_escape_message",
+		"description": "Store a message that may contain JSON escape sequences. Preserve escaped quotation marks (\\\"), newlines (\\n), backslashes (\\\\), tabs (\\t), carriage returns (\\r), backspace (\\b), and form feeds (\\f) exactly inside the string.",
+		"parameters": {
+			"message": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	},
+	{
+		"name": "fn_escape_text",
+		"description": "Store text containing escaped JSON characters. The text can contain quotation marks represented as \\\" and line breaks represented as \\n. Backslashes, tabs, carriage returns, backspace, and form-feed escapes should also be preserved.",
+		"parameters": {
+			"text": {
+				"type": "string"
+			}
+		},
+		"returns": {
+			"type": "string"
+		}
+	}
+]
