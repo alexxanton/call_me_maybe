@@ -56,4 +56,4 @@ class JsonParser(BaseModel):
         try:
             self._outputs.append(json.loads(output))
         except JSONDecodeError:
-            print("Invalid JSON")
+            print("\nInvalid JSON")
