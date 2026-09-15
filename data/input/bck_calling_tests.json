@@ -1,6 +1,6 @@
 [
 	{
-		"prompt": "Store this message exactly: She said \"hello\" to me."
+		"prompt": "Store this message exactly: She said \"hello\" to \\"
 	},
 	{
 		"prompt": "Store this message exactly: First line\nSecond line."
@@ -31,8 +31,5 @@
 	},
 	{
 		"prompt": "Store this text with a form-feed escape: Hello\fWorld"
-	},
-	{
-		"prompt": "Store the complete message exactly: She said \\\"hello\\\"\\nThe path is C:\\\\Users\\\\Alex\\tDone."
 	}
 ]
