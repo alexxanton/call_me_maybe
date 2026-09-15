@@ -42,18 +42,6 @@ class FunctionCallingEngine(BaseModel):
         """Encode a string and return as a list of ints."""
         return self._model.encode(output)[0].tolist()
 
-    """
-    def _print_top(self, np_logits) -> None:
-        top_ids = np.argsort(np_logits)[-10:][::-1]
-
-        for token_id in top_ids:
-            print(
-                token_id,
-                repr(self._model.decode([int(token_id)])),
-                np_logits[token_id],
-            )
-    """
-
     def generate(self, prompt: str) -> str:
         """Generate the output."""
         decoder = ConstrainedDecoder(prompt, self.functions, self._vocab)

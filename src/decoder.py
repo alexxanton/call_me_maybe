@@ -1,4 +1,5 @@
 import re
+import json
 import numpy as np
 from pydantic import BaseModel
 from .validation import Function, Parameter
@@ -16,12 +17,13 @@ class ConstrainedDecoder(BaseModel):
     _numbers: ClassVar[Set[str]] = {
         "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
     }
+    _comma_and_newline_tokens: ClassVar[Optional[List[int]]] = None
 
     def __init__(
         self, prompt: str, functions: List[Function], vocab: Dict[str, int]
     ) -> None:
         """Initialize the constrained decoder."""
-        prompt = prompt.replace("\\", "\\\\").replace('"', '\\"')
+        prompt = json.dumps(prompt)[1:-1]
         super().__init__(prompt=prompt, functions=functions, vocab=vocab)
 
         self._prefix = '"name": "'
@@ -40,9 +42,15 @@ class ConstrainedDecoder(BaseModel):
         self._name_complete = False
         self._param_complete = True
         self._param_type = ""
+        self._backslash_escaped = False
 
         if ConstrainedDecoder._ids is None:
             ConstrainedDecoder._ids = {v: k for k, v in vocab.items()}
+
+        if ConstrainedDecoder._comma_and_newline_tokens is None:
+            ConstrainedDecoder._comma_and_newline_tokens = [
+                k for k, v in ConstrainedDecoder._ids.items() if ",Ċ" in v
+            ]
 
         if ConstrainedDecoder._func_tokens is None:
             ConstrainedDecoder._func_tokens = {
@@ -53,6 +61,9 @@ class ConstrainedDecoder(BaseModel):
 
         self._alpha_num = ConstrainedDecoder._func_tokens
         self._id_values = ConstrainedDecoder._ids
+        self._string_terminating_tokens = (
+            ConstrainedDecoder._comma_and_newline_tokens
+        )
 
     def _get_params(self, name: str) -> None:
         """Get parameters from function."""
@@ -86,14 +97,39 @@ class ConstrainedDecoder(BaseModel):
     ) -> None:
         """Remove tokens that would break proper JSON output."""
         if self._param_type not in ["string", "boolean", "bool"]:
-            if ((last_token.isnumeric() or last_token == "-")
-               and "-" in allowed):
+            if (
+                (last_token.isnumeric() or last_token == "-")
+                and "-" in allowed
+            ):
                 allowed.remove("-")
                 newline.clear()
         if self._param_type in ["number", "float", "num"]:
             if last_token == "." and "." in allowed:
                 allowed.remove(".")
                 newline.clear()
+
+    def _constrain_string_logits(
+        self, logits: np.ndarray, last_token: str
+    ) -> np.ndarray:
+        """Constrain invalid logits for string parameters."""
+        backslash = self.vocab.get("\\")
+
+        if (
+            last_token and last_token[-1] == "\\"
+            and not self._backslash_escaped and last_token.count("\\") == 1
+        ):
+            next_token = self._id_values[int(np.argmax(logits))]
+            if not re.match(r'[\\"bfnrtu]', next_token[0]):
+                self._backslash_escaped = True
+                valid_logits = np.full_like(logits, -float("inf"))
+                valid_logits[backslash] = logits[backslash]
+                return valid_logits
+        if self._backslash_escaped:
+            self._backslash_escaped = False
+        if self._last_param_reached:
+            for invalid in self._string_terminating_tokens:
+                logits[invalid] = -float("inf")
+        return logits
 
     def get_allowed_tokens(
         self, logits: np.ndarray = np.array([]),
@@ -114,6 +150,8 @@ class ConstrainedDecoder(BaseModel):
         if not allowed and self._name_complete:
             selected_tokens = self._get_type_tokens()
             if not selected_tokens:
+                if self._param_type == "string":
+                    return self._constrain_string_logits(logits, last_token)
                 return logits
             allowed.update(selected_tokens)
 
