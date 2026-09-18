@@ -21,7 +21,7 @@ class FunctionCallingEngine(BaseModel):
         super().__init__(functions=functions)
         self._base_prompt = BasePrompt(functions)
 
-        from llm_sdk.llm_sdk import Small_LLM_Model
+        from llm_sdk import Small_LLM_Model
         self._model = Small_LLM_Model()
         path = self._model.get_path_to_vocab_file()
         self._text_idx = 0
@@ -40,7 +40,7 @@ class FunctionCallingEngine(BaseModel):
 
     def _get_input_ids(self, output: str) -> List[int]:
         """Encode a string and return as a list of ints."""
-        return self._model.encode(output)[0].tolist()
+        return list(self._model.encode(output)[0].tolist())
 
     def generate(self, prompt: str) -> str:
         """Generate the output."""
@@ -84,4 +84,4 @@ class FunctionCallingEngine(BaseModel):
         input_ids += self._get_input_ids(decoder.state)
         self._typewrite(input_ids)
 
-        return self._model.decode(input_ids[output_start_idx:])
+        return str(self._model.decode(input_ids[output_start_idx:]))
