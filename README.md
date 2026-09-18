@@ -178,10 +178,14 @@ The project is split into several components with distinct responsibilities:
 * `__main__.py` handles command-line execution and high-level orchestration.
 
 ## Performance
-
+This implementation relies on injecting the necessary structure manually and then letting the model decide what to put on the parameters or what function to use, so the performance really depends on the hardware of the machine it's being used on.
 
 ## Challenges
+
 ### String escaping
+
+The most hard thing to accomplish was without a doubt implementing a safe way to generate characters with a preceding backslash when generating regex (`\\d+`).
+To solve this, when the model picked a token with a backslash, the next token had to be checked, and if it didn't contain a backslash at the start, then all logits had to be set to -infinite with constrained decoding except for the single token that just contains a backslash.
 
 ## Testing Strategy
 To ensure proper **JSON** output generation, multiple tests were created to debug specific edge cases and undesired situations.
@@ -190,11 +194,11 @@ These are the things that are tested:
 * Proper parameter type generation
 * Trailing commas
 * Backslash before other characters
+* Floating points
 
-Some of the tests rely on tricking the model into doing things it wouldn't normally do, like adding extra decimal points (`1.2.3`) 
+Some of the tests rely on tricking the model into doing things it wouldn't normally do, like adding extra decimal points (`1.2.3`) or adding trailing commas by making it think there's three parameters when there's actually just two.
 
 ## Example Usage
-
 With the default input files:
 
 ```bash
@@ -233,7 +237,8 @@ can produce:
 
 ```
 ## Resources
-
+NumPy Documentation: https://numpy.org/doc/
+Constrained Decoding Concepts: https://zeroentropy.dev/concepts/constrained-decoding/
 ### AI Use Disclosure
 
 In accordance with the 42 curriculum standards, AI tools were used during development for the following tasks:
@@ -241,6 +246,6 @@ In accordance with the 42 curriculum standards, AI tools were used during develo
 | Task / Project Part | How AI Was Used |
 | --- | --- |
 | **Input File Tests** | All tests were written with the help of AI because no one wants to write so many JSON files by hand |
-| **Edge Case Brainstorming** | Used to genera |
 
 > **Note:** All the implementations were written manually. No core logic was copy-pasted, satisfying the pedagogical standards of the 42 peer-evaluation system.
+
