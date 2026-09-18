@@ -10,7 +10,7 @@ wheels/
 .venv
 
 # Misc
-tests
 data/output
+.mypy_cache
 *.swp
 .env
